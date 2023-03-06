@@ -1,33 +1,31 @@
-import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { textColor } from "../../constants/colors"
 
-export default function SuccessPage({ successInfo }) {
-    const { movie, date, hour, buyer, cpf, seats } = successInfo
+export default function SuccessPage() {
+
     return (
         <PageContainer>
-            <Title>Pedido feito <br /> com sucesso!</Title>
+            <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer data-test="movie-info">
+            <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>{movie}</p>
-                <p>{date} - {hour}</p>
+                <p>Tudo em todo lugar ao mesmo tempo</p>
+                <p>03/03/2023 - 14:00</p>
             </TextContainer>
 
-            <TextContainer data-test="seats-info">
+            <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                {seats.map(s => <p key={s}>Assento {s}</p>)}
+                <p>Assento 01</p>
+                <p>Assento 02</p>
+                <p>Assento 03</p>
             </TextContainer>
 
-            <TextContainer data-test="client-info">
+            <TextContainer>
                 <strong><p>Comprador</p></strong>
-                <p>Nome: {buyer}</p>
-                <p>CPF: {cpf}</p>
+                <p>Nome: Letícia Chijo</p>
+                <p>CPF: 123.456.789-10</p>
             </TextContainer>
 
-            <Link to="/" data-test="go-home-btn">
-                <button>Voltar para Home</button>
-            </Link>
+            <button>Voltar para Home</button>
         </PageContainer>
     )
 }
@@ -38,7 +36,7 @@ const PageContainer = styled.div`
     align-items: center;
     font-family: 'Roboto';
     font-size: 24px;
-    color: ${textColor};
+    color: #293845;
     margin: 30px 20px;
     padding-bottom: 120px;
     padding-top: 70px;
@@ -48,17 +46,17 @@ const PageContainer = styled.div`
     button {
         margin-top: 50px;
     }
-`
-const Title = styled.h1`
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 28px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #247A6B;
+    h1 {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #247A6B;
+    }
 `
 const TextContainer = styled.div`
     width: 100%;

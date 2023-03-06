@@ -1,73 +1,54 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
 import styled from "styled-components"
-import { useParams } from "react-router-dom"
-import { textColor } from "../../constants/colors"
-import MovieFooter from "../../components/MovieFooter/MovieFooter"
-import Seat from "../../components/Seat/Seat"
-import BuyerForm from "./BuyerForm"
-import { BASE_URL } from "../../constants/urls"
-import SeatsCaption from "./SeatsCaption"
 
-export default function SeatsPage({ setSuccessInfo }) {
-    const [session, setSession] = useState(undefined)
-    const [selectedSeats, setSelectedSeats] = useState([])
-    const { sessionId } = useParams()
-
-    useEffect(() => {
-        axios.get(`${BASE_URL}/showtimes/${sessionId}/seats`)
-            .then((res) => setSession(res.data))
-            .catch((err) => console.log(err.response.data))
-    }, [sessionId])
-
-    function handleSeat(seat) {
-        if (!seat.isAvailable) {
-            alert("Assento não está disponível")
-        } else {
-            const isSelected = selectedSeats.some((s) => s.id === seat.id)
-
-            if (isSelected) {
-                const newList = selectedSeats.filter((s) => s.id !== seat.id)
-                setSelectedSeats(newList)
-            } else {
-                setSelectedSeats([...selectedSeats, seat])
-            }
-        }
-    }
-
-    if (!session) {
-        return <div>Carregando...</div>
-    }
+export default function SeatsPage() {
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                {session.seats.map((seat) => (
-                    <Seat
-                        key={seat.id}
-                        seat={seat}
-                        isSelected={selectedSeats.some((s) => seat.id === s.id)}
-                        handleSeat={handleSeat}
-                    />
-                ))}
+                <SeatItem>01</SeatItem>
+                <SeatItem>02</SeatItem>
+                <SeatItem>03</SeatItem>
+                <SeatItem>04</SeatItem>
+                <SeatItem>05</SeatItem>
             </SeatsContainer>
 
-            <SeatsCaption />
+            <CaptionContainer>
+                <CaptionItem>
+                    <CaptionCircle />
+                    Selecionado
+                </CaptionItem>
+                <CaptionItem>
+                    <CaptionCircle />
+                    Disponível
+                </CaptionItem>
+                <CaptionItem>
+                    <CaptionCircle />
+                    Indisponível
+                </CaptionItem>
+            </CaptionContainer>
 
-            <BuyerForm 
-                selectedSeats={selectedSeats} 
-                session={session}
-                setSuccessInfo={setSuccessInfo}
-            />
+            <FormContainer>
+                Nome do Comprador:
+                <input placeholder="Digite seu nome..." />
 
-            <MovieFooter
-                title={session.movie.title}
-                poster={session.movie.posterURL}
-                weekday={session.day.weekday}
-                hour={session.name}
-            />
+                CPF do Comprador:
+                <input placeholder="Digite seu CPF..." />
+
+                <button>Reservar Assento(s)</button>
+            </FormContainer>
+
+            <FooterContainer>
+                <div>
+                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                </div>
+                <div>
+                    <p>Tudo em todo lugar ao mesmo tempo</p>
+                    <p>Sexta - 14h00</p>
+                </div>
+            </FooterContainer>
+
         </PageContainer>
     )
 }
@@ -79,17 +60,106 @@ const PageContainer = styled.div`
     font-family: 'Roboto';
     font-size: 24px;
     text-align: center;
-    color: ${textColor};
+    color: #293845;
     margin-top: 30px;
     padding-bottom: 120px;
     padding-top: 70px;
 `
 const SeatsContainer = styled.div`
-    width: 100%;
+    width: 330px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+`
+const FormContainer = styled.div`
+    width: calc(100vw - 40px); 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 0;
+    font-size: 18px;
+    button {
+        align-self: center;
+    }
+    input {
+        width: calc(100vw - 60px);
+    }
+`
+const CaptionContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-between;
+    margin: 20px;
+`
+const CaptionCircle = styled.div`
+    border: 1px solid blue;         // Essa cor deve mudar
+    background-color: lightblue;    // Essa cor deve mudar
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+`
+const CaptionItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+`
+const SeatItem = styled.div`
+    border: 1px solid blue;         // Essa cor deve mudar
+    background-color: lightblue;    // Essa cor deve mudar
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    font-family: 'Roboto';
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+`
+const FooterContainer = styled.div`
+    width: 100%;
+    height: 120px;
+    background-color: #C3CFD9;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0;
+
+    div:nth-child(1) {
+        box-shadow: 0px 2px 4px 2px #0000001A;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        margin: 12px;
+        img {
+            width: 50px;
+            height: 70px;
+            padding: 8px;
+        }
+    }
+
+    div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        p {
+            text-align: left;
+            &:nth-child(2) {
+                margin-top: 10px;
+            }
+        }
+    }
 `
