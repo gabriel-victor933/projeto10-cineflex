@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 
 export default function SessionsPage({ selectMovie, selecionarSecao }) {
 
+    if (selectMovie == null) {
+        return (
+            <div>Carregando....</div>
+        )
+    }
+
     return (
         <PageContainer>
             Selecione o horário

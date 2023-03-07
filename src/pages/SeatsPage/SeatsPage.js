@@ -3,12 +3,14 @@ import { useState } from "react"
 
 export default function SeatsPage({ selectSession }) {
 
-    console.log(selectSession)
 
     const [reservados, setReservados] = useState([])
 
-    console.log(reservados)
-
+    if (selectSession == null) {
+        return (
+            <div>Carregando...</div>
+        )
+    }
 
     return (
         <PageContainer>

@@ -15,8 +15,8 @@ const urlMovies = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
 export default function App() {
 
     const [movies, setMovies] = useState([])
-    const [selectMovie, setSelectMovie] = useState({ id: null })
-    const [selectSession, setSelectSession] = useState({ id: null })
+    const [selectMovie, setSelectMovie] = useState(null)
+    const [selectSession, setSelectSession] = useState(null)
 
     async function getMovies() {
 
