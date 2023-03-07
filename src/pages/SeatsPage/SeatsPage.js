@@ -1,30 +1,46 @@
 import styled from "styled-components"
+import { useState } from "react"
 
-export default function SeatsPage() {
+export default function SeatsPage({ selectSession }) {
+
+    console.log(selectSession)
+
+    const [reservados, setReservados] = useState([])
+
+    console.log(reservados)
+
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                {selectSession.seats.map((seat) => {
+                    return (
+                        <SeatItem
+                            selecionado={reservados.includes(seat.name)}
+                            key={seat.id}
+                            available={seat.isAvailable}
+                            onClick={() => setReservados([...reservados, seat.name])}
+                        >
+                            {seat.name}
+                        </SeatItem>
+                    )
+                })}
+
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle selecionado={true} />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle available={true} />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle available={false} />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -41,11 +57,11 @@ export default function SeatsPage() {
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={selectSession.movie.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{selectSession.movie.title}</p>
+                    <p>{selectSession.day.weekday} - {selectSession.name}</p>
                 </div>
             </FooterContainer>
 
@@ -96,8 +112,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${props => props.selecionado ? "1px solid #0E7D71" : props.available ? "1px solid blue" : "1px solid #F7C52B"};         // Essa cor deve mudar
+    background-color: ${props => props.selecionado ? "#1AAE9E" : props.available ? "lightblue" : "#FBE192"};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -113,8 +129,8 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${props => props.selecionado ? "1px solid #0E7D71" : props.available ? "1px solid blue" : "1px solid #F7C52B"};         // Essa cor deve mudar
+    background-color: ${props => props.selecionado ? "#1AAE9E" : props.available ? "lightblue" : "#FBE192"};    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;

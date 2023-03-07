@@ -1,26 +1,22 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom";
 
-export default function HomePage() {
+export default function HomePage({ movies, selecionarFilme }) {
+
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
 
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+                {movies.map((movie) => {
+                    return (<MovieContainer key={movie.id}>
+                        <Link to={`/sessoes/${movie.id}`}>
+                            <img src={movie.posterURL} alt={movie.title} onClick={() => selecionarFilme(movie.id)} />
+                        </Link>
+                    </MovieContainer>)
+                })}
 
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
             </ListContainer>
 
         </PageContainer>
