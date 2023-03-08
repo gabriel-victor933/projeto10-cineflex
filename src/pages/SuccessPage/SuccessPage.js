@@ -3,6 +3,8 @@ import styled from "styled-components"
 
 export default function SuccessPage({ loading, reservados, nome, cpf, selectSession }) {
 
+
+
     if (loading) {
         return (
             <div>
