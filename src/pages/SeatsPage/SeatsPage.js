@@ -12,6 +12,21 @@ export default function SeatsPage({ selectSession }) {
         )
     }
 
+    function adicionarReservados(name, isAvailable) {
+
+        let novosReservados = []
+
+        if (!isAvailable) return
+
+        if (reservados.includes(name)) {
+            novosReservados = reservados.filter((p) => p !== name)
+        } else {
+            novosReservados = [...reservados, name]
+        }
+
+        setReservados(novosReservados)
+    }
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
@@ -23,7 +38,7 @@ export default function SeatsPage({ selectSession }) {
                             selecionado={reservados.includes(seat.name)}
                             key={seat.id}
                             available={seat.isAvailable}
-                            onClick={() => setReservados([...reservados, seat.name])}
+                            onClick={() => adicionarReservados(seat.name, seat.isAvailable)}
                         >
                             {seat.name}
                         </SeatItem>

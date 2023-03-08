@@ -5,10 +5,9 @@ import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
 import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, } from "react-router-dom";
+
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 const urlMovies = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
 
@@ -17,6 +16,7 @@ export default function App() {
     const [movies, setMovies] = useState([])
     const [selectMovie, setSelectMovie] = useState(null)
     const [selectSession, setSelectSession] = useState(null)
+
 
     async function getMovies() {
 
@@ -72,29 +72,23 @@ export default function App() {
         getMovies()
     }, [])
 
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <HomePage movies={movies} selecionarFilme={selecionarFilme} />,
-        },
-        {
-            path: "/sessoes/:id",
-            element: <SessionsPage selectMovie={selectMovie} selecionarSecao={selecionarSecao} />,
-        },
-        {
-            path: "/assentos/:id",
-            element: <SeatsPage selectSession={selectSession} />
-        }
-    ]);
+
 
 
     return (
         <>
-            <NavContainer>CINEFLEX</NavContainer>
-            <RouterProvider router={router} />
+
             {/* 
-            
             <SuccessPage /> */}
+
+            <BrowserRouter>
+                <NavContainer>CINEFLEX</NavContainer>
+                <Routes>
+                    <Route path={"/"} element={<HomePage movies={movies} selecionarFilme={selecionarFilme} />} />
+                    <Route path={"/sessoes/:id"} element={<SessionsPage selectMovie={selectMovie} selecionarSecao={selecionarSecao} />} />
+                    <Route path={"/assentos/:id"} element={<SeatsPage selectSession={selectSession} />} />
+                </Routes>
+            </BrowserRouter>
         </>
     )
 }
