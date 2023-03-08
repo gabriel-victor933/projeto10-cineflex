@@ -1,10 +1,8 @@
 import styled from "styled-components"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
-export default function SeatsPage({ selectSession }) {
-
-
-    const [reservados, setReservados] = useState([])
+export default function SeatsPage({ selectSession, reservados, setNome, setCpf, setReservados, reservarAssentos }) {
 
     if (selectSession == null) {
         return (
@@ -12,16 +10,21 @@ export default function SeatsPage({ selectSession }) {
         )
     }
 
-    function adicionarReservados(name, isAvailable) {
+    function adicionarReservados(id, isAvailable) {
 
         let novosReservados = []
 
-        if (!isAvailable) return
+        if (!isAvailable) {
 
-        if (reservados.includes(name)) {
-            novosReservados = reservados.filter((p) => p !== name)
+            alert("esse assento não está disponivel!!")
+            return
+        }
+
+
+        if (reservados.includes(id)) {
+            novosReservados = reservados.filter((p) => p !== id)
         } else {
-            novosReservados = [...reservados, name]
+            novosReservados = [...reservados, id,]
         }
 
         setReservados(novosReservados)
@@ -35,10 +38,10 @@ export default function SeatsPage({ selectSession }) {
                 {selectSession.seats.map((seat) => {
                     return (
                         <SeatItem
-                            selecionado={reservados.includes(seat.name)}
+                            selecionado={reservados.includes(seat.id)}
                             key={seat.id}
                             available={seat.isAvailable}
-                            onClick={() => adicionarReservados(seat.name, seat.isAvailable)}
+                            onClick={() => adicionarReservados(seat.id, seat.isAvailable)}
                         >
                             {seat.name}
                         </SeatItem>
@@ -64,12 +67,12 @@ export default function SeatsPage({ selectSession }) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
 
-                <button>Reservar Assento(s)</button>
+                <Link to={reservados.length == 0 ? "" : "/sucesso"}><button onClick={reservarAssentos}>Reservar Assento(s)</button></Link>
             </FormContainer>
 
             <FooterContainer>

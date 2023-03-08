@@ -17,6 +17,11 @@ export default function App() {
     const [selectMovie, setSelectMovie] = useState(null)
     const [selectSession, setSelectSession] = useState(null)
 
+    const [reservados, setReservados] = useState([])
+    const [nome, setNome] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [loading, setLoading] = useState(true)
+
 
     async function getMovies() {
 
@@ -63,9 +68,9 @@ export default function App() {
 
     function selecionarSecao(id) {
         getSession(id)
+        setReservados([])
     }
 
-    console.log(selectSession)
 
 
     useEffect(() => {
@@ -73,20 +78,36 @@ export default function App() {
     }, [])
 
 
+    function reservarAssentos() {
 
+        const reserva = { ids: reservados, name: nome, cpf: cpf }
+
+        const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)
+
+        promisse.then((dados) => {
+            console.log(dados)
+            setLoading(false)
+        })
+
+        promisse.catch((erro) => {
+            console.log(erro)
+        })
+
+    }
 
     return (
         <>
 
             {/* 
-            <SuccessPage /> */}
+             */}
 
             <BrowserRouter>
                 <NavContainer>CINEFLEX</NavContainer>
                 <Routes>
                     <Route path={"/"} element={<HomePage movies={movies} selecionarFilme={selecionarFilme} />} />
                     <Route path={"/sessoes/:id"} element={<SessionsPage selectMovie={selectMovie} selecionarSecao={selecionarSecao} />} />
-                    <Route path={"/assentos/:id"} element={<SeatsPage selectSession={selectSession} />} />
+                    <Route path={"/assentos/:id"} element={<SeatsPage selectSession={selectSession} reservados={reservados} setNome={setNome} setCpf={setCpf} setReservados={setReservados} reservarAssentos={reservarAssentos} />} />
+                    <Route path={"/sucesso"} element={<SuccessPage loading={loading} reservados={reservados} nome={nome} cpf={cpf} selectSession={selectSession} />} />
                 </Routes>
             </BrowserRouter>
         </>
