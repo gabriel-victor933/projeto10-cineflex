@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-export default function SeatsPage({ selectSession, reservados, setNome, setCpf, setReservados, reservarAssentos }) {
+export default function SeatsPage({ selectSession, reservados, setNome, setCpf, setReservados, reservarAssentos, nome, cpf }) {
 
     if (selectSession == null) {
         return (
@@ -68,10 +68,10 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
 
             <FormContainer>
                 Nome do Comprador:
-                <input data-test="client-name" placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
+                <input data-test="client-name" value={nome} placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
 
                 CPF do Comprador:
-                <input data-test="client-cpf" placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
+                <input data-test="client-cpf" value={cpf} placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
 
                 <Link to={reservados.length == 0 ? "" : "/sucesso"}><button data-test="book-seat-btn" onClick={reservarAssentos}>Reservar Assento(s)</button></Link>
             </FormContainer>

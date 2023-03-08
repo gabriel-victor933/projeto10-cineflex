@@ -69,6 +69,8 @@ export default function App() {
     function selecionarSecao(id) {
         getSession(id)
         setReservados([])
+        setNome("")
+        setCpf("")
     }
 
 
@@ -77,7 +79,7 @@ export default function App() {
         getMovies()
     }, [])
 
-
+    console.log(nome, cpf)
     function reservarAssentos() {
 
         if (reservados.length == 0) return
@@ -87,7 +89,6 @@ export default function App() {
         const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)
 
         promisse.then((dados) => {
-            console.log(dados)
             setLoading(false)
         })
 
@@ -108,7 +109,9 @@ export default function App() {
                 <Routes>
                     <Route path={"/"} element={<HomePage movies={movies} selecionarFilme={selecionarFilme} />} />
                     <Route path={"/sessoes/:id"} element={<SessionsPage selectMovie={selectMovie} selecionarSecao={selecionarSecao} />} />
-                    <Route path={"/assentos/:id"} element={<SeatsPage selectSession={selectSession} reservados={reservados} setNome={setNome} setCpf={setCpf} setReservados={setReservados} reservarAssentos={reservarAssentos} />} />
+                    <Route
+                        path={"/assentos/:id"}
+                        element={<SeatsPage selectSession={selectSession} reservados={reservados} setNome={setNome} setCpf={setCpf} setReservados={setReservados} reservarAssentos={reservarAssentos} nome={nome} cpf={cpf} />} />
                     <Route path={"/sucesso"} element={<SuccessPage loading={loading} reservados={reservados} nome={nome} cpf={cpf} selectSession={selectSession} />} />
                 </Routes>
             </BrowserRouter>
