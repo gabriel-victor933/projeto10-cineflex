@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import Comprador from "./Comprador"
 
 export default function SeatsPage({ selectSession, reservados, setNome, setCpf, setReservados, reservarAssentos, nome, cpf }) {
 
@@ -66,6 +67,8 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
                 </CaptionItem>
             </CaptionContainer>
 
+
+
             <FormContainer>
                 Nome do Comprador:
                 <input data-test="client-name" value={nome} placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
@@ -118,8 +121,14 @@ const FormContainer = styled.div`
     align-items: flex-start;
     margin: 20px 0;
     font-size: 18px;
-    button {
+
+    div {
+        text-align: left;
+    }
+
+    a, button {
         align-self: center;
+        text-decoration: none;
     }
     input {
         width: calc(100vw - 60px);
