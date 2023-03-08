@@ -38,6 +38,7 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
                 {selectSession.seats.map((seat) => {
                     return (
                         <SeatItem
+                            data-test="seat"
                             selecionado={reservados.includes(seat.id)}
                             key={seat.id}
                             available={seat.isAvailable}
@@ -67,15 +68,15 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
+                <input data-test="client-name" placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
+                <input data-test="client-cpf" placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
 
-                <Link to={reservados.length == 0 ? "" : "/sucesso"}><button onClick={reservarAssentos}>Reservar Assento(s)</button></Link>
+                <Link to={reservados.length == 0 ? "" : "/sucesso"}><button data-test="book-seat-btn" onClick={reservarAssentos}>Reservar Assento(s)</button></Link>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={selectSession.movie.posterURL} alt="poster" />
                 </div>

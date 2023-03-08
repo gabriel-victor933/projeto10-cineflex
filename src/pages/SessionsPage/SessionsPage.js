@@ -16,13 +16,13 @@ export default function SessionsPage({ selectMovie, selecionarSecao }) {
             <div>
                 {selectMovie.days.map((day) => {
                     return (
-                        <SessionContainer key={day.id}>
+                        <SessionContainer data-test="movie-day" key={day.id}>
                             {day.weekday} - {day.date}
                             <ButtonsContainer>
                                 {day.showtimes.map((time) => {
                                     return (
                                         <Link key={time.id} to={`/assentos/${time.id}`}>
-                                            <button onClick={() => selecionarSecao(time.id)}>{time.name}</button>
+                                            <button data-test="showtime" onClick={() => selecionarSecao(time.id)}>{time.name}</button>
                                         </Link>
                                     )
                                 })}
@@ -35,7 +35,7 @@ export default function SessionsPage({ selectMovie, selecionarSecao }) {
 
             </div>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={selectMovie.posterURL} alt={selectMovie.title} />
                 </div>

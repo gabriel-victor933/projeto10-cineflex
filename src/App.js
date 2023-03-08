@@ -80,6 +80,8 @@ export default function App() {
 
     function reservarAssentos() {
 
+        if (reservados.length == 0) return
+
         const reserva = { ids: reservados, name: nome, cpf: cpf }
 
         const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)

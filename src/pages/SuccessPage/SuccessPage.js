@@ -25,24 +25,24 @@ export default function SuccessPage({ loading, reservados, nome, cpf, selectSess
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{selectSession.movie.title}</p>
                 <p>{selectSession.day.date} - {selectSession.name}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 {reservados.map((p) => <p key={p}>Assento {findName(p)}</p>)}
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info" >
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {nome}</p>
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
-            <Link to="/"><button>Voltar para Home</button></Link>
+            <Link to="/"><button data-test="go-home-btn" >Voltar para Home</button></Link>
         </PageContainer>
     )
 }
