@@ -1,9 +1,37 @@
 import styled from "styled-components"
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import Comprador from "./Comprador"
+import axios from "axios"
 
-export default function SeatsPage({ selectSession, reservados, setNome, setCpf, setReservados, reservarAssentos, nome, cpf }) {
+export default function SeatsPage({ assentos, setAssentos, setInfoMovie, reservados, setNome, setCpf, setReservados, reservarAssentos, nome, cpf }) {
+
+    const [selectSession, setSelectSession] = useState(null)
+    const { id } = useParams()
+
+    async function getSession(id) {
+
+        try {
+            const { data } = await axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${id}/seats`)
+
+            setSelectSession(data)
+            setInfoMovie({ title: data.movie.title, data: data.day.date, hora: data.name })
+
+        } catch (erro) {
+            console.log(erro)
+        }
+
+    }
+
+    useEffect(() => {
+
+        getSession(id)
+        setReservados([])
+        setAssentos([])
+        setNome("")
+        setCpf("")
+
+    }, [])
 
     if (selectSession == null) {
         return (
@@ -11,24 +39,29 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
         )
     }
 
-    function adicionarReservados(id, isAvailable) {
-
+    function adicionarReservados(id, isAvailable, name) {
         let novosReservados = []
+        let novosAssentos = []
 
         if (!isAvailable) {
-
             alert("esse assento não está disponivel!!")
             return
         }
 
 
         if (reservados.includes(id)) {
+
             novosReservados = reservados.filter((p) => p !== id)
+            novosAssentos = assentos.filter((p) => p !== name)
+
         } else {
-            novosReservados = [...reservados, id,]
+
+            novosReservados = [...reservados, id]
+            novosAssentos = [...assentos, name]
         }
 
         setReservados(novosReservados)
+        setAssentos(novosAssentos)
     }
 
     return (
@@ -43,7 +76,7 @@ export default function SeatsPage({ selectSession, reservados, setNome, setCpf, 
                             selecionado={reservados.includes(seat.id)}
                             key={seat.id}
                             available={seat.isAvailable}
-                            onClick={() => adicionarReservados(seat.id, seat.isAvailable)}
+                            onClick={() => adicionarReservados(seat.id, seat.isAvailable, seat.name)}
                         >
                             {seat.name}
                         </SeatItem>

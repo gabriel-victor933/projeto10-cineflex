@@ -1,8 +1,32 @@
 import styled from "styled-components"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios"
+const urlMovies = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
 
 
-export default function SessionsPage({ selectMovie, selecionarSecao }) {
+export default function SessionsPage() {
+
+    const [selectMovie, setSelectMovie] = useState(null)
+
+    const { id } = useParams()
+
+    async function getMovie(id) {
+
+        try {
+            const response = await axios.get(`${urlMovies}/${id}/showtimes`)
+
+            setSelectMovie(response.data)
+
+        } catch (erro) {
+            console.log(erro)
+        }
+
+    }
+
+    useEffect(() => {
+        getMovie(id)
+    }, [])
 
     if (selectMovie == null) {
         return (
@@ -22,7 +46,7 @@ export default function SessionsPage({ selectMovie, selecionarSecao }) {
                                 {day.showtimes.map((time) => {
                                     return (
                                         <Link key={time.id} to={`/assentos/${time.id}`}>
-                                            <button data-test="showtime" onClick={() => selecionarSecao(time.id)}>{time.name}</button>
+                                            <button data-test="showtime" >{time.name}</button>
                                         </Link>
                                     )
                                 })}

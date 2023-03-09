@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({ loading, reservados, nome, cpf, selectSession }) {
+export default function SuccessPage({ loading, reservados, nome, cpf, infoMovie, assentos }) {
 
 
 
@@ -17,11 +17,6 @@ export default function SuccessPage({ loading, reservados, nome, cpf, selectSess
         )
     }
 
-    function findName(id) {
-        const ob = selectSession.seats.find((i) => i.id === id)
-
-        return ob.name
-    }
 
     return (
         <PageContainer>
@@ -29,13 +24,13 @@ export default function SuccessPage({ loading, reservados, nome, cpf, selectSess
 
             <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
-                <p>{selectSession.movie.title}</p>
-                <p>{selectSession.day.date} - {selectSession.name}</p>
+                <p>{infoMovie.title}</p>
+                <p>{infoMovie.data} - {infoMovie.hora}</p>
             </TextContainer>
 
             <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
-                {reservados.map((p) => <p key={p}>Assento {findName(p)}</p>)}
+                {assentos.map((p) => <p key={p}>Assento {p} </p>)}
             </TextContainer>
 
             <TextContainer data-test="client-info" >
