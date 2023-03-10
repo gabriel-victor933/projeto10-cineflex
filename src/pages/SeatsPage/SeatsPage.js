@@ -53,7 +53,7 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
 
         if (reservados.includes(id)) {
 
-            if (!window.confirm(`Apagar assento?`)) return 0
+            if (!window.confirm(`Apagar assento?`)) return
 
             novosReservados = reservados.filter((p) => p !== id)
             novosAssentos = assentos.filter((p) => p !== name)
