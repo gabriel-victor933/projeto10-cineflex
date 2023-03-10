@@ -16,30 +16,8 @@ export default function App() {
     const [infoMovie, setInfoMovie] = useState(null)
     const [reservados, setReservados] = useState([])
     const [assentos, setAssentos] = useState([])
-    const [nome, setNome] = useState("")
-    const [cpf, setCpf] = useState("")
-    const [loading, setLoading] = useState(true)
+    const [compradores, setCompradores] = useState([])
 
-    function reservarAssentos() {
-
-        if (reservados.length == 0) return
-
-        const reserva = { ids: reservados, name: nome, cpf: cpf }
-
-        const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)
-
-        promisse.then((dados) => {
-            setLoading(false)
-            console.log(dados)
-        })
-
-        promisse.catch((erro) => {
-            console.log(erro)
-        })
-
-    }
-
-    console.log(assentos, reservados)
 
     return (
         <>
@@ -54,10 +32,10 @@ export default function App() {
                     <Route path={"/sessoes/:id"} element={<SessionsPage />} />
                     <Route
                         path={"/assentos/:id"}
-                        element={<SeatsPage assentos={assentos} setAssentos={setAssentos} setInfoMovie={setInfoMovie} reservados={reservados} setNome={setNome} setCpf={setCpf} setReservados={setReservados} reservarAssentos={reservarAssentos} nome={nome} cpf={cpf} />} />
+                        element={<SeatsPage compradores={compradores} setCompradores={setCompradores} assentos={assentos} setAssentos={setAssentos} setInfoMovie={setInfoMovie} reservados={reservados} setReservados={setReservados} />} />
                     <Route
                         path={"/sucesso"}
-                        element={<SuccessPage loading={loading} reservados={reservados} nome={nome} cpf={cpf} infoMovie={infoMovie} assentos={assentos} />} />
+                        element={<SuccessPage compradores={compradores} reservados={reservados} infoMovie={infoMovie} assentos={assentos} />} />
                 </Routes>
             </BrowserRouter>
         </>

@@ -1,21 +1,9 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({ loading, reservados, nome, cpf, infoMovie, assentos }) {
+export default function SuccessPage({ compradores, infoMovie, assentos }) {
 
 
-
-    if (loading) {
-        return (
-            <div>
-                <h1>Carregando...</h1>
-                <h1>Carregando...</h1>
-                <h1>Carregando...</h1>
-                <h1>Carregando...</h1>
-                <h1>Carregando...</h1>
-            </div>
-        )
-    }
 
 
     return (
@@ -34,9 +22,15 @@ export default function SuccessPage({ loading, reservados, nome, cpf, infoMovie,
             </TextContainer>
 
             <TextContainer data-test="client-info" >
-                <strong><p>Comprador</p></strong>
-                <p>Nome: {nome}</p>
-                <p>CPF: {cpf}</p>
+                {compradores.map((comprador) => {
+                    return (
+                        <div key={comprador.id}>
+                            <strong><p>Comprador</p></strong>
+                            <p>Nome: {comprador.nome}</p>
+                            <p>CPF: {comprador.cpf}</p>
+                        </div>
+                    )
+                })}
             </TextContainer>
 
             <Link to="/"><button data-test="go-home-btn" >Voltar para Home</button></Link>

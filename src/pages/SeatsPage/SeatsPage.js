@@ -1,13 +1,14 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import Comprador from "./Comprador"
 import axios from "axios"
 
-export default function SeatsPage({ assentos, setAssentos, setInfoMovie, reservados, setNome, setCpf, setReservados, reservarAssentos, nome, cpf }) {
+export default function SeatsPage({ compradores, setCompradores, assentos, setAssentos, setInfoMovie, reservados, setReservados, reservarAssentos }) {
 
     const [selectSession, setSelectSession] = useState(null)
     const { id } = useParams()
+    const navigate = useNavigate()
 
     async function getSession(id) {
 
@@ -28,8 +29,6 @@ export default function SeatsPage({ assentos, setAssentos, setInfoMovie, reserva
         getSession(id)
         setReservados([])
         setAssentos([])
-        setNome("")
-        setCpf("")
 
     }, [])
 
@@ -62,6 +61,30 @@ export default function SeatsPage({ assentos, setAssentos, setInfoMovie, reserva
 
         setReservados(novosReservados)
         setAssentos(novosAssentos)
+    }
+
+
+
+    function reservarAssentos(e) {
+
+        e.preventDefault()
+
+        if (reservados.length == 0) return
+
+        const reserva = { ids: reservados, compradores: compradores }
+
+
+        const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)
+
+        promisse.then((dados) => {
+            console.log(dados)
+            navigate("/sucesso")
+        })
+
+        promisse.catch((erro) => {
+            console.log(erro)
+        })
+
     }
 
     return (
@@ -100,17 +123,15 @@ export default function SeatsPage({ assentos, setAssentos, setInfoMovie, reserva
                 </CaptionItem>
             </CaptionContainer>
 
-
-
             <FormContainer>
-                Nome do Comprador:
-                <input data-test="client-name" value={nome} placeholder="Digite seu nome..." onChange={(e) => setNome(e.target.value)} />
+                <form onSubmit={reservarAssentos}>
 
-                CPF do Comprador:
-                <input data-test="client-cpf" value={cpf} placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} />
-
-                <Link to={reservados.length == 0 ? "" : "/sucesso"}><button data-test="book-seat-btn" onClick={reservarAssentos}>Reservar Assento(s)</button></Link>
+                    {reservados.map((r, i) => <Comprador key={r} r={r} i={i} compradores={compradores} setCompradores={setCompradores} />)}
+                    <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
+                </form>
             </FormContainer>
+
+
 
             <FooterContainer data-test="footer">
                 <div>
@@ -155,7 +176,7 @@ const FormContainer = styled.div`
     margin: 20px 0;
     font-size: 18px;
 
-    div {
+    div,form {
         text-align: left;
     }
 
