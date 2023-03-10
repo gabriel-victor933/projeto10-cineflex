@@ -29,6 +29,7 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
         getSession(id)
         setReservados([])
         setAssentos([])
+        setCompradores([])
 
     }, [])
 
