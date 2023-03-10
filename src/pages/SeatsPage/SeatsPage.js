@@ -43,6 +43,8 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
         let novosReservados = []
         let novosAssentos = []
 
+
+
         if (!isAvailable) {
             alert("esse assento não está disponivel!!")
             return
@@ -51,10 +53,11 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
 
         if (reservados.includes(id)) {
 
-            if (window.confirm("Desejar excluir esse assento?")) {
-                novosReservados = reservados.filter((p) => p !== id)
-                novosAssentos = assentos.filter((p) => p !== name)
-            }
+            if (!window.confirm(`Apagar assento?`)) return 0
+
+            novosReservados = reservados.filter((p) => p !== id)
+            novosAssentos = assentos.filter((p) => p !== name)
+
 
 
 
@@ -228,6 +231,7 @@ const SeatItem = styled.div`
     align-items: center;
     justify-content: center;
     margin: 5px 3px;
+    color: #000000;
 `
 const FooterContainer = styled.div`
     width: 100%;

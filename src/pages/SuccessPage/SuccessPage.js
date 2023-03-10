@@ -1,13 +1,7 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({ compradores, infoMovie, assentos, loading }) {
-
-    if (loading) {
-        return (
-            <div>Loading...</div>
-        )
-    }
+export default function SuccessPage({ compradores, infoMovie, assentos }) {
 
 
     return (
@@ -37,7 +31,7 @@ export default function SuccessPage({ compradores, infoMovie, assentos, loading 
                 })}
             </TextContainer>
 
-            <Link to="/"><button data-test="go-home-btn" >Voltar para Home</button></Link>
+            <Link to="/" data-test="go-home-btn"><button  >Voltar para Home</button></Link>
         </PageContainer>
     )
 }

@@ -33,7 +33,7 @@ const Navbar = () => {
 
     return (
         <NavContainer>
-            {window.location.href !== "http://localhost:3000/" && <button data-test="go-home-header-btn" onClick={() => navigate(-1)}><BsArrowLeft /></button>}
+            {window.location.pathname !== "/" && <button data-test="go-home-header-btn" onClick={() => navigate(-1)}><BsArrowLeft /></button>}
             CINEFLEX
         </NavContainer>
     )
