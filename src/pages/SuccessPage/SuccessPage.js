@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({ compradores, infoMovie, assentos }) {
+export default function SuccessPage({ compradores, infoMovie, assentos, loading }) {
 
-
+    if (loading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
 
 
     return (

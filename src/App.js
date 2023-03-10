@@ -18,7 +18,6 @@ export default function App() {
     const [assentos, setAssentos] = useState([])
     const [compradores, setCompradores] = useState([])
 
-
     return (
         <>
 
