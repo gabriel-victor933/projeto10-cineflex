@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Comprador({ r, i, compradores, setCompradores }) {
+export default function Comprador({ r, i, compradores, setCompradores, assentos }) {
 
     const [nome, setNome] = useState("")
     const [cpf, setCpf] = useState("")
@@ -54,9 +54,9 @@ export default function Comprador({ r, i, compradores, setCompradores }) {
 
     return (
         <div>
-            <label htmlFor={`name${r}`}>Nome do Comprador {i + 1}:</label>
+            <label htmlFor={`name${r}`}>Nome do Comprador {assentos[i]}:</label>
             <input required id={`name${r}`} name={"name"} data-test="client-name" type="text" value={nome} placeholder="Digite seu nome..." onChange={(e) => handleChange(e)} />
-            <label htmlFor={`cpf${r}`}>CPF do Comprador {i + 1}:</label>
+            <label htmlFor={`cpf${r}`}>CPF do Comprador {assentos[i]}:</label>
             <input required id={`cpf${r}`} name={"cpf"} data-test="client-cpf" type="number" value={cpf} placeholder="Digite seu CPF..." onChange={(e) => handleChange(e)} />
         </div>
     )

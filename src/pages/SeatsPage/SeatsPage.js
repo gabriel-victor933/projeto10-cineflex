@@ -51,8 +51,12 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
 
         if (reservados.includes(id)) {
 
-            novosReservados = reservados.filter((p) => p !== id)
-            novosAssentos = assentos.filter((p) => p !== name)
+            if (window.confirm("Desejar excluir esse assento?")) {
+                novosReservados = reservados.filter((p) => p !== id)
+                novosAssentos = assentos.filter((p) => p !== name)
+            }
+
+
 
         } else {
 
@@ -128,7 +132,7 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
             <FormContainer>
                 <form onSubmit={reservarAssentos}>
 
-                    {reservados.map((r, i) => <Comprador key={r} r={r} i={i} compradores={compradores} setCompradores={setCompradores} />)}
+                    {reservados.map((r, i) => <Comprador key={r} r={r} i={i} compradores={compradores} setCompradores={setCompradores} assentos={assentos} />)}
                     <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
                 </form>
             </FormContainer>
