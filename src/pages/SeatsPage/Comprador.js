@@ -13,7 +13,7 @@ export default function Comprador({ r, i, compradores, setCompradores }) {
 
 
         if (newCompradores.length != 0) {
-            index = newCompradores.findIndex((e) => { return e.id == r })
+            index = newCompradores.findIndex((e) => { return e.idAssento == r })
         }
 
 
@@ -33,9 +33,9 @@ export default function Comprador({ r, i, compradores, setCompradores }) {
 
             } else {
 
-                const newComprador = { id: "", nome: "", cpf: "" }
+                const newComprador = { idAssento: "", nome: "", cpf: "" }
 
-                newComprador.id = r
+                newComprador.idAssento = r
 
                 if (e.target.getAttribute("name") == "name") {
                     setNome(e.target.value)

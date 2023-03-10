@@ -73,6 +73,7 @@ export default function SeatsPage({ compradores, setCompradores, assentos, setAs
         if (reservados.length == 0) return
 
         const reserva = { ids: reservados, compradores: compradores }
+        console.log(reserva)
 
 
         const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", reserva)
